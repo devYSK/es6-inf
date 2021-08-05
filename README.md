@@ -184,6 +184,254 @@ function addMark() {
 ```
 
 
+---
+## 실습 1- 특정 문자열이 포함된 배열 만들어 반환하기
+
+#### 문제
+
+![](/images/2021-08-05-16-31-29.png)
+
+
+```javascript
+
+let list = document.querySelectorAll("li");
+
+let listArray = Array.from(list); // li 노드로 구성된 배열 
+
+
+let eArray = listArray.filter(function(v) {
+    return v.innerText.includes("e");
+});
+
+console.log(eArray);
+
+```
+
+---
+
+## Destructuring Array
+
+## `Destructuring` : 객체나 배열을 변수로 '분해'할 수 있게 해주는 특별한 문법
+    
+* 참조 : https://poiemaweb.com/es6-destructuring
+
+```javascript
+//Destructuring
+let data = ["crong", "honux", "jk", "jinny"];
+
+let [jisu,,jung] = data;
+
+console.log(jisu, jung); // crong, jk 출력
+```
+
+## Destructuring Object
+
+```javascript
+
+let obj = {
+  name : "crong",
+  address : "Korea",
+  age : 10
+}
+
+
+// object 내의 변수명이랑 같아야 한다
+let {name, age} = obj;
+console.log(name, age); // crong, 10 출력
+
+
+// 이름 변경도 가능하다 
+let {name:myName, age:myAge} = obj;
+console.log(myName, myAge); // crong, 10 출력
+```
+
+---
+
+## Destructuring 활용 - JSON 파싱
+
+* let [,`원하는 값`] = JSON 변수; 이런식으로 뽑아서 쓸 수 있다.
+    
+![](/images/2021-08-05-17-19-51.png)
+
+* {title, imgurl} = mbc;
+    * 이런식으로 또 내부 변수를 뽑을 수 있다.
+
+#### `이렇게 개선 가능`
+* 한번에 뽑는 방법
+
+```javascript
+
+let [{title, imgurl}, ] = news;
+console.log(title, imgurl);
+
+// 첫번째 인덱스에 넣고 뽑는 경우, sbs 관련 정보가 나오고
+
+
+let [, {title, imgurl}] = news;
+console.log(title, imgurl);
+
+// 두번째 인덱스에 넣고 뽑는 경우 mbc 관련 정보가 나온다.
+
+// 해당 인덱스에 맞춰 관련 정보가 나오는 것 
+```
+
+---
+
+## Destructuring 활용 - Event 객체 전달
+
+
+```javascript
+
+// mbc 관련 newlist를 뽑음. 
+function getNewsList([, {newslist}]) {
+  console.log(newslist);
+}
+
+getNewsList(news); // news JSON 전달 
+
+// sbs 관련 newlist를 받음, 
+function getNewsList2([{newslist}, ]) {
+  console.log(newslist);
+}
+
+getNewsList2(news);
+
+```
+
+---
+
+## Set으로 유니크한 배열 만들기
+
+* Set 자료구조 
+    * 중복없이 유일한 값을 저장하려고 할 때.
+    * 이미 존재하는지 체크할 때 유용.
+
+* 선언 : let mySet = new Set();
+    * 보통 출력할 때 forEach 사용
+        * set.forEach(fucntion(v) {
+            console.log(v);
+         });
+    
+    * 요소 추가 : set.add(obj);
+
+    * set 내에 객체를 같고있는지 확인할때 쓰는 함수 `has`
+        * set.has(obj); // true or false
+    
+    * set 에서 요소 삭제
+        * set.delete(obj);
+
+    
+
+## WeakSet으로 효과적으로 객체타입 저장하기
+
+* 참조를 가지고 있는 객체만 저장이 가능한 자료구조 
+
+* 객체 형태를 중복없이 저장하려고 할 때 유용하다. 
+
+* null, primitive type 등 참조가 없는 값은 저장이 안되고 오류가 뜬다. 
+
+* function() 도 저장 가능 (참조를 가진 객체니까)
+
+* 선언 : let ws = new WeakSet();
+
+
+---
+
+## Map & WeakMap 추가정보를 담은 객체 저장하기. 
+
+* Array를 조금 더 개선한 자료구조 -> set, weakset
+* Object 를 조금 더 개선한 자료구조 -> map, weakmap
+
+* map은 key/value 구조 
+    * map 내에 객체 저장 : map.set(k, v);
+
+    * map 내에서 객체 꺼내기 : map.get(key);
+
+
+## WeakMap 클래스 인스턴스 변수 보호하기 
+
+```javascript
+
+
+const wm = new WeakMap();
+
+function Area(height, width) {
+  wm.set(this, {height, width}); // 변수 보호 
+}
+
+
+Area.prototype.getArea = function() {
+  const {height, width} = wm.get(this); // destructuring
+ 
+  return this.geight * this.width;
+}
+
+let myarea = new Area(10, 20);
+
+console.log(myarea.getArea());
+
+console.log(myarea.height); // undefined. 접근 불가 
+
+
+// object를 사용해서 보호하기
+
+const obj = {};
+
+function Area(height, width) {  
+  obj.height = height;
+  obj.width = width;
+}
+
+Area.prototype.getArea = function() { 
+  return this.geight * this.width;
+}
+
+let myarea = new Area(10, 20);
+console.log(myarea.getArea());
+
+```
+
+--- 
+
+## 실습 2 로또번호 생성기
+![](/images/2021-08-05-18-39-13.png)
+
+* 로또번호 코드 
+
+```javascript
+
+const SETTING = {
+  name : "LUCKY LOTTO!",
+  count : 6,
+  maxNumber : 45
+}
+
+const lottos = new Set();
+const {count, maxNumber} = SETTING;
+
+function getRandomNumber(maxNumber) {
+  
+  while (lottos.size < count) {
+    let randomNum = Math.ceil(Math.random() * 100);
+    
+    if (randomNum <= maxNumber) {
+      lottos.add(randomNum);
+    }     
+  }
+
+  return Array.from(lottos);
+}
+
+
+console.log(getRandomNumber(maxNumber));
+
+/* 출력용
+lottos.forEach(function(v) {
+  console.log(v);
+})
+*/
+
+```
 
 
 
