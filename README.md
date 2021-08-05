@@ -407,7 +407,7 @@ const SETTING = {
 }
 
 const lottos = new Set();
-const {count, maxNumber} = SETTING;
+const {count, maxNumber} = SETTING; // 이러면 메모리 손해 아닌가? 
 
 function getRandomNumber(maxNumber) {
   
