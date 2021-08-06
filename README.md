@@ -756,3 +756,10 @@ const proxy = new Proxy(myObj, {
 });
 ```
 
+# 미니프로젝트 
+
+![](/images/2021-08-06-15-09-02.png)
+
+* es6 기반
+* node.js사용
+
