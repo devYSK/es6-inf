@@ -664,4 +664,76 @@ console.log(myHealth);
 
 ## object assign 으로 Immutable 객체 만들기 
 
+* 이전 객체 가지고 새 객체 만들기
+```javascript
+
+const previousObj = {
+  name : "crong",
+  lastTime : "11:20"
+};
+
+// property가 겹치면 갱신하고, 없으면 새로 넣는다 
+const myHealth = Object.assign({}, previousObj, 
+                              {
+  "lastTime" : "12:30",
+  "name" : "헤응",
+  "age" : 99
+                              });
+
+console.log("myhealth is ", myHealth);
+```
+
+## object setPrototypeOf로 객체 만들기
+
+* https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Object/setPrototypeOf
+
+* ~의 프로토타입으로 셋팅한다 
+
+* Object.setPrototypeOf(obj, prototype);
+
+* Parameters
+    * obj : 프로토타입을 설정을 가지는 객체
+    * prototype : 객체의 새로운 프로토 타입  (객체 or null).
+* Return value : 지정된 객체 
+
+```javascript
+
+const healthObj = {
+  
+  
+  showHealth : function() {
+    
+  },
+  
+  setHealth : function(newTime) {
+    this.healthTime = newTime;
+  }
+  
+  name : "crong",
+  lastTime : "11:20"
+};
+
+const myHealth = {
+  name : "crong",
+  lastTime : "11:20"
+}
+
+
+Object.setPrototypeOf(myhealth, healthObj)
+
+const newObj = Object.setPrototypeOf({
+  name: "crong",
+  lastTime : "11:20"
+}, healthObj);
+
+console.log("myhealth is ", myHealth);
+```
+
+## Object setPrototypeOf 로 객체간 prototype chain생성하기
+
+
+---
+
+## Module의 이해 
+
 
