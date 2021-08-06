@@ -1,0 +1,23 @@
+{
+  "name": "es6-inf",
+  "version": "1.0.0",
+  "description": "모던 자스크립트 개발을 위한 es6 강좌 - 인프런 윤지수 강사님",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start" : "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devYSK/es6-inf.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/devYSK/es6-inf/issues"
+  },
+  "homepage": "https://github.com/devYSK/es6-inf#readme",
+  "devDependencies": {
+    "webpack": "^5.48.0"
+  }
+}
