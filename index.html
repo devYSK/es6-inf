@@ -3,73 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width= , initial-scale=1.0">
     <title>Document</title>
-</head>
-<body>
-    <ul>
-        <li>apple</li>
-        <li>orange</li>
-        <li>banana</li>
-        <li>strawberry</li>
-       
-      </ul>
-<script>
+</head><body>
+    <section class="controller">
+        <button class="start">코드스쿼드 블로그 입니다</button>
+    </section>
 
-let list = document.querySelectorAll("li");
+    <section class="blogList">
+        <ul></ul>
+    </section>
 
-let listArray = Array.from(list); // li 노드로 구성된 배열 
-
-
-let eArray = listArray.filter(function(v) {
-    return v.innerText.includes("e");
-});
-
-
-console.log(eArray);
-
-
-
-
-const SETTING = {
-  name : "LUCKY LOTTO!",
-  count : 6,
-  maxNumber : 45
-}
-
-
-const lottos = new Set();
-
-const {count, maxNumber} = SETTING;
-
-
-function getRandomNumber(maxNumber) {
-  
-  while (lottos.size < count) {
-    let randomNum = Math.ceil(Math.random() * 100);
-    
-    if (randomNum <= maxNumber) {
-      lottos.add(randomNum);
-    } 
-    
-  }
-
-  return Array.from(lottos);
-}
-
-//getRandomNumber(maxNumber);
-
-console.log(getRandomNumber(maxNumber));
-
-/*
-lottos.forEach(function(v) {
-  console.log(v);
-})
-*/
-
-
-
-</script>
-
-</body>
+    <section class="like-list">
+        <h4>내 찜 목록</h4>
+        <ul></ul>
+    </section>
+    <script src="./dist/bundle.js"></script>
+  </body>
 </html>
