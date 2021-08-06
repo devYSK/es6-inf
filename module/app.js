@@ -1,4 +1,9 @@
-import {log} from './myLogger';
+import log, { getCurrentHour, MyLogger} from './myLogger';
 
-log();
+log('gggggggg');
 
+log(getCurrentHour());
+
+const logger = new MyLogger();
+
+log('lectures of codesquad are {logger.getLectures()}');

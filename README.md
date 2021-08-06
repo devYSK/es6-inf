@@ -734,6 +734,25 @@ console.log("myhealth is ", myHealth);
 
 ---
 
-## Module의 이해 
 
+## Proxy로 interception 기능 구현 
+
+```javascript
+
+const myObj = {name : "youngsoo"};
+
+const proxy = new Proxy(myObj, {
+  
+  get : function(target, property, receiver) {
+    console.log('get value');
+    return target[property];
+  },
+  set : function(target, property, value) {
+    console.log("set value");
+    
+    target[property] = value;
+  }
+  
+});
+```
 
