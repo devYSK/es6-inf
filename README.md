@@ -434,4 +434,234 @@ lottos.forEach(function(v) {
 ```
 
 
+## template 처리
+
+* json으로 응답을 받고 , javascript object로 변환한 후에 데이터 처리를 한 후에 dom에 추가해야한다.
+
+```javascript
+
+const data = [
+  {
+    name : 'coffee-bean',
+    order : true,
+    items : ['americano', 'milk', 'green-tea']
+  },
+  {
+    name : 'starbucks',
+    order : false
+  }
+ 
+]
+
+const template = `<div>welcome ${data[0].name} !!`;
+
+console.log(template);
+```
+
+* ${data[index].property} 이런식으로 사용할 수 있다. 
+
+
+## arrow function
+
+* 자바의 람다식과 비슷한 형태.
+* function 키워드를 생략하고 사용
+
+* 형태 : () => {...}
+
+```javascript
+
+// 일반 콜백 함수
+setTimeout(function() {
+  console.log("settimeout");
+}, 1000);
+
+// arrow function
+
+setTimeout(() => {
+  console.log("settimeout");
+}, 1000);
+```
+
+## arrow function의 this context
+
+* 일반 콜백 function에서는 this는 window를 가리키지만, 
+* arrow function을 사용했을 때는 컨텍스트 주체가 자기 자신이 되서 bind(this) 하지 않아도 된다. 
+
+```javascript
+
+// .bind(this) 를 해야 자기 객체(현재 실행 주체)를 가리킨다. 
+// 그렇지 않으면 오류가 난다. 
+const myObj = {
+  runTimeout() {
+    setTimeout(function() {
+      console.log(this === window);// bind하면 false.  
+      this.printData();
+    }.bind(this), 200);
+  },
+  
+  printData() {
+    console.log("hi code!");
+  }
+}
+
+myObj.runTimeout();
+
+
+
+// arrow function을 사용했을 때. bind하지않아도 된다. 
+const myObj = {
+  runTimeout() {
+    setTimeout(() => {
+       console.log(this === window); //false
+      this.printData();
+    }, 200);
+  },
+  
+  printData() {
+    console.log("hi code!");
+  }
+ 
+}
+
+myObj.runTimeout();
+
+```
+
+---
+## function Default parameters
+
+* `||` 연산자로 디폴트 값을 정할 수 있다. 
+* 파라미터에 디폴트 값을 직접 넣을수도 있다.  
+```javascript
+
+//방법 1
+function sum(v1, v2 = 1) { // 디폴트 값 직접 넣기  
+  size = size || 1; // 있으면 size 없으면 1
+    
+  return v1 + v2;
+}
+
+// 방법 2 오브젝트 사용
+
+
+function sum(v1, v2 = {value:1}) {
+  return v1 + v2.value;
+}
+console.log(sum(5,{value:3}));
+```
+
+---
+
+## rest parameters
+
+
+* 배열에 숫자만 있는지 검사하는 예제
+```javascript
+
+
+// rest parameters
+function checkNum() {
+  const argArray = Array.prototype
+                        .slice
+                        .call(arguments);
+  console.log(toString.call(argArray));
+  
+  const result = argArray.every((v) => typeof v === "number");
+  console.log(result);
+              
+ 
+}
+
+checkNum(10, 2, 3, 4, 5, "55"); // false
+checkNum(10, 2, 3, 4, 5); // true
+
+```
+
+* arguments 같은 경우는 가짜 배열이기 때문에 위 처럼 진짜 배열러 바꿔줘야 한다. 
+
+* 함수의 인자로 `...arg`를 받게된다면? - rest parameter
+    * 매개변수에 ...가 들어갔따 -> 배열로 받는다. 
+* 다음과 같이 간단하게 사용할 수 있다.
+```javascript
+function checkNum2(...argArray) {
+  const result = argArray.every((v) => typeof v === "number");
+  console.log(result);
+}
+```
+
+---
+
+## class를 통한 객체생성
+
+* es6부터는 class라는 키워드가 생겼다.
+
+```javascript
+
+// es6 이전 class 선언방법 
+function Health(name) {
+  this.name = name;
+  
+}
+
+Health.prototype.showHealth = function() {
+  console.log("hello" + this.name);
+}
+
+const h = new Health("youngsoo");
+h.showHealth();
+
+
+// es6 클래스 키워드! 
+class Health {
+  counstructor(name, lastTime) {
+    this.name = name;
+    this.lastTime = lastTime;
+  }
+  
+  showHealth() { // 프로토타입에 저장된다
+    console.log("안녕하세요" + this.name);
+  }
+}
+
+const h = new Health("youngsoo");
+h.showHealth();
+
+```
+
+## object assign으로 JS 객체 만들기
+
+```javascript
+
+
+// es5에 추가된 Object assign 메서드
+// new 말고 생성자를 만드는법
+
+var healthObj  = {
+  showHealth : function() {
+    console.log("dㅗ늘 운동 시간 : " + this.healthTime);
+  }
+}
+
+const myHealth = Object.create(healthObj);
+
+myHealth.healthTime = "11:20";
+myHealth.name = "youngsoo";
+
+console.log(myHealth);
+myHealth.showHealth();
+
+
+// 이런식으로 변경 
+const myHealth = Object.assign(Object.create(healthObj), {
+  name : "youngsoo",
+  lastTime : "11:20"
+});
+
+console.log(myHealth);
+   
+```
+
+
+## object assign 으로 Immutable 객체 만들기 
+
 
